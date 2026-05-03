@@ -1,0 +1,74 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build wedding invitation
+        working-directory: wedding-invitation
+        env:
+          ACCOUNT_GROOM_BANK: ${{ secrets.ACCOUNT_GROOM_BANK }}
+          ACCOUNT_GROOM_NUMBER: ${{ secrets.ACCOUNT_GROOM_NUMBER }}
+          ACCOUNT_BRIDE_BANK: ${{ secrets.ACCOUNT_BRIDE_BANK }}
+          ACCOUNT_BRIDE_NUMBER: ${{ secrets.ACCOUNT_BRIDE_NUMBER }}
+          ACCOUNT_GROOM_FATHER_BANK: ${{ secrets.ACCOUNT_GROOM_FATHER_BANK }}
+          ACCOUNT_GROOM_FATHER_NUMBER: ${{ secrets.ACCOUNT_GROOM_FATHER_NUMBER }}
+          ACCOUNT_BRIDE_FATHER_BANK: ${{ secrets.ACCOUNT_BRIDE_FATHER_BANK }}
+          ACCOUNT_BRIDE_FATHER_NUMBER: ${{ secrets.ACCOUNT_BRIDE_FATHER_NUMBER }}
+          ACCOUNT_GROOM_MOTHER_BANK: ${{ secrets.ACCOUNT_GROOM_MOTHER_BANK }}
+          ACCOUNT_GROOM_MOTHER_NUMBER: ${{ secrets.ACCOUNT_GROOM_MOTHER_NUMBER }}
+          ACCOUNT_BRIDE_MOTHER_BANK: ${{ secrets.ACCOUNT_BRIDE_MOTHER_BANK }}
+          ACCOUNT_BRIDE_MOTHER_NUMBER: ${{ secrets.ACCOUNT_BRIDE_MOTHER_NUMBER }}
+          NAVER_MAP_KEY: ${{ secrets.NAVER_MAP_KEY }}
+          NAME_GROOM_EN: ${{ secrets.NAME_GROOM_EN }}
+          NAME_BRIDE_EN: ${{ secrets.NAME_BRIDE_EN }}
+          NAME_GROOM_FIRST_KO: ${{ secrets.NAME_GROOM_FIRST_KO }}
+          NAME_BRIDE_FIRST_KO: ${{ secrets.NAME_BRIDE_FIRST_KO }}
+          NAME_GROOM_FATHER_KO: ${{ secrets.NAME_GROOM_FATHER_KO }}
+          NAME_GROOM_MOTHER_KO: ${{ secrets.NAME_GROOM_MOTHER_KO }}
+          NAME_BRIDE_FATHER_KO: ${{ secrets.NAME_BRIDE_FATHER_KO }}
+          NAME_BRIDE_MOTHER_KO: ${{ secrets.NAME_BRIDE_MOTHER_KO }}
+          NAME_GROOM_KO: ${{ secrets.NAME_GROOM_KO }}
+          NAME_BRIDE_KO: ${{ secrets.NAME_BRIDE_KO }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: bash build.sh
+
+      - name: Assemble site
+        run: |
+          mkdir -p _site/wedding-invitation
+          cp -r wedding-invitation/dist/* _site/wedding-invitation/
+          cp -r maintenance _site/maintenance
+          cp index.html _site/
+          cp .nojekyll _site/
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

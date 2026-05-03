@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Wedding Invitation</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="이정현 🤍 한다혜 결혼한대요!!!">
+  <meta property="og:description" content="2026년 8월 8일 12시 30분 엘블레스">
+  <meta property="og:image" content="https://junghyun-dev.github.io/wedding-invitation/photos/hero.webp">
+  <meta property="og:url" content="https://junghyun-dev.github.io/wedding-invitation/">
+  <meta property="og:type" content="website">
+
+  <!-- Font preconnect + load -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Bona+Nova+SC:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- AOS CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+
+  <!-- Naver Maps API -->
+  <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=__NAVER_MAP_KEY__"></script>
+
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+  <style>
+    /* ===== Design System: CSS Custom Properties ===== */
+    :root {
+      --color-bg: #faf8f5;
+      --color-text: #5c4a3a;
+      --color-text-light: #8a7b6b;
+      --color-accent: #8a9a7b;
+      --color-accent-light: #b5c4a8;
+      --color-white: #ffffff;
+      --color-border: #e8e0d8;
+
+      --font-korean: 'Gowun Dodum', serif;
+      --font-english: 'Bona Nova SC', serif;
+
+      --max-width: 480px;
+      --section-padding: 64px 24px;
+      --line-height: 1.8;
+    }
+
+    /* ===== Reset & Base ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 20px; }
+    body {
+      font-family: var(--font-korean);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: var(--line-height);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ===== Container ===== */
+    .wrapper {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ===== Section Base ===== */
+    .section {
+      padding: var(--section-padding);
+      text-align: center;
+    }
+    .section__title {
+      font-family: var(--font-korean);
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      color: var(--color-text);
+      margin-bottom: 32px;
+    }
+
+
+    /* ===== Typography ===== */
+    .english {
+      font-family: var(--font-english);
+      font-weight: 400;
+    }
+    h1, .names {
+      font-family: var(--font-english);
+      font-weight: 400;
+    }
+    p {
+      font-weight: 300;
+      line-height: var(--line-height);
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      background: url('photos/hero.webp') center center / cover no-repeat;
+      color: var(--color-white);
+      position: relative;
+      padding: 80px 24px 48px;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.05) 0%,
+        rgba(0, 0, 0, 0.15) 50%,
+        rgba(0, 0, 0, 0.45) 100%
+      );
+      z-index: 1;
+    }
+    .hero > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero__names {
+      font-family: var(--font-korean);
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero__date {
+      font-family: var(--font-english);
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      opacity: 0.9;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    }
+    .hero__ampersand {
+      display: inline-flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin: 0 8px;
+      line-height: 1;
+    }
+    .hero__scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      opacity: 0.6;
+    }
+
+    /* ===== BGM Toggle ===== */
+    .bgm-toggle {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 10;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: var(--color-white, #fff);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .bgm-toggle:active {
+      transform: scale(0.92);
+    }
+    .bgm-toggle--muted {
+      opacity: 0.5;
+    }
+    .bgm-toggle__bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 16px;
+    }
+    .bgm-toggle__bars span {
+      display: block;
+      width: 3px;
+      background: var(--color-white, #fff);
+      border-radius: 1px;
+    }
+    .bgm-toggle__play {
+      display: none;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 7px 0 7px 12px;
+      border-color: transparent transparent transparent var(--color-white, #fff);
+    }
+    .bgm-toggle--muted .bgm-toggle__bars {
+      display: none;
+    }
+    .bgm-toggle--muted .bgm-toggle__play {
+      display: block;
+    }
+    @keyframes bgm-bar1 {
+      0%, 100% { height: 4px; }
+      50% { height: 14px; }
+    }
+    @keyframes bgm-bar2 {
+      0%, 100% { height: 8px; }
+      50% { height: 5px; }
+    }
+    @keyframes bgm-bar3 {
+      0%, 100% { height: 6px; }
+      50% { height: 16px; }
+    }
+    @keyframes bgm-bar4 {
+      0%, 100% { height: 10px; }
+      50% { height: 4px; }
+    }
+    .bgm-toggle--playing {
+      opacity: 1;
+    }
+    .bgm-toggle--playing .bgm-toggle__bars span:nth-child(1) {
+      animation: bgm-bar1 0.8s ease-in-out infinite;
+    }
+    .bgm-toggle--playing .bgm-toggle__bars span:nth-child(2) {
+      animation: bgm-bar2 0.7s ease-in-out infinite 0.1s;
+    }
+    .bgm-toggle--playing .bgm-toggle__bars span:nth-child(3) {
+      animation: bgm-bar3 0.9s ease-in-out infinite 0.2s;
+    }
+    .bgm-toggle--playing .bgm-toggle__bars span:nth-child(4) {
+      animation: bgm-bar4 0.75s ease-in-out infinite 0.05s;
+    }
+
+    /* ===== Brief Section ===== */
+    .brief__divider {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      width: 16em;
+      max-width: 100%;
+      margin: 0 auto 32px;
+    }
+    .brief__divider--bottom {
+      margin: 32px auto 0;
+    }
+    .brief__datetime {
+      font-size: 0.95rem;
+      color: var(--color-text);
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+    .brief__venue {
+      font-size: 0.95rem;
+      color: var(--color-text-light);
+      line-height: 1.4;
+    }
+
+    /* ===== Greeting Section ===== */
+    .greeting__quote {
+      font-size: 0.9rem;
+      color: var(--color-text-light);
+      font-style: italic;
+      margin-bottom: 32px;
+      line-height: 1.9;
+    }
+    .greeting__message {
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+      line-height: 2;
+    }
+    .greeting__families {
+      font-size: 0.9rem;
+      line-height: 2.2;
+    }
+    .greeting__families .role {
+      color: var(--color-text-light);
+      font-size: 0.8rem;
+    }
+    .greeting__families p {
+      margin-bottom: 8px;
+    }
+    .greeting__families p:last-child {
+      margin-bottom: 0;
+    }
+    .greeting__parent {
+      display: inline;
+      font-weight: 700;
+    }
+    .greeting__parent--deceased::before {
+      content: '故 ';
+      font-size: 0.8rem;
+      color: var(--color-text-light);
+    }
+    .greeting__child {
+      font-weight: 700;
+    }
+
+    /* ===== Calendar Section ===== */
+    .calendar {
+      max-width: 320px;
+      margin: 0 auto 32px;
+    }
+    .calendar__month {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 16px;
+      letter-spacing: 0.1em;
+    }
+    .calendar__grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+    .calendar__grid .day-header {
+      font-size: 0.8rem;
+      color: var(--color-text-light);
+      padding: 8px 0;
+    }
+    .calendar__grid .day-header:first-child {
+      color: #c4736e;
+    }
+    .calendar__grid .day-header:last-child {
+      color: #6a8caf;
+    }
+    .calendar__grid .day {
+      padding: 8px 0;
+      border-radius: 50%;
+    }
+    .calendar__grid .day.empty {
+      visibility: hidden;
+    }
+    .calendar__grid .day.highlight {
+      background: var(--color-accent);
+      color: var(--color-white) !important;
+      font-weight: 700;
+    }
+    .calendar__grid .day.sunday {
+      color: #c4736e;
+    }
+    .calendar__grid .day.saturday {
+      color: #6a8caf;
+    }
+    .calendar__info {
+      font-size: 0.9rem;
+      color: var(--color-text-light);
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+    .calendar__dday {
+      font-size: 1rem;
+      color: var(--color-accent);
+      margin-top: 24px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== Venue Section ===== */
+    .venue__name {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+    .venue__address {
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      margin-bottom: 24px;
+    }
+    .venue__map {
+      width: 100%;
+      height: 250px;
+      background: var(--color-border);
+      border-radius: 8px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    /* ===== Navigation Buttons ===== */
+    .nav-section {
+      margin-top: 24px;
+      text-align: left;
+    }
+    .nav-section__title {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--color-text);
+      margin-bottom: 16px;
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 0;
+      justify-content: center;
+    }
+    .nav-buttons__btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px 0;
+      font-size: 0.85rem;
+      font-family: var(--font-korean);
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .nav-buttons__btn + .nav-buttons__btn {
+      border-left: none;
+    }
+    .nav-buttons__btn:first-child {
+      border-radius: 4px 0 0 4px;
+    }
+    .nav-buttons__btn:last-child {
+      border-radius: 0 4px 4px 0;
+    }
+    .nav-buttons__icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* ===== Venue Divider ===== */
+    .venue__divider {
+      border: none;
+      border-top: 1px dashed var(--color-border);
+      margin: 24px 0;
+    }
+
+    /* ===== Transportation Info ===== */
+    .transport-section {
+      text-align: left;
+    }
+    .transport-section__title {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--color-text);
+      margin-bottom: 12px;
+    }
+    .transport-section__desc {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--color-text-light);
+    }
+    .transport-line {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+    .transport-line:last-child {
+      margin-bottom: 0;
+    }
+    .transport-circle {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      position: relative;
+      top: 1px;
+    }
+    .transport-circle--half {
+      background: linear-gradient(to right, #EF7C1C 50%, #D31145 50%);
+    }
+    .transport-circle--green {
+      background: #53b332;
+    }
+    .transport-circle--blue {
+      background: #0068b7;
+    }
+    .transport-circle--red {
+      background: #e60012;
+    }
+    .transport-detail {
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      margin-bottom: 6px;
+      line-height: 1.6;
+      text-align: left;
+    }
+    .transport-detail:last-child {
+      margin-bottom: 0;
+    }
+    .transport-detail a {
+      color: #0077b6;
+      text-decoration: none;
+    }
+    .transport-detail a::after {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-left: 3px;
+      vertical-align: -1px;
+      background: currentColor;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z'/%3E%3C/svg%3E");
+      -webkit-mask-size: contain;
+      mask-size: contain;
+    }
+
+    /* ===== RSVP Modal ===== */
+    .rsvp-shuttle {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .rsvp-shuttle__info {
+      font-size: 0.9rem;
+      color: var(--color-text-light);
+      line-height: var(--line-height);
+      margin-bottom: 0.75rem;
+    }
+
+    .rsvp-shuttle__btn {
+      display: inline-block;
+      padding: 0.6rem 1.5rem;
+      background-color: var(--color-accent);
+      color: var(--color-white);
+      border: none;
+      border-radius: 2rem;
+      font-family: var(--font-korean);
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .rsvp-shuttle__btn:hover {
+      background-color: var(--color-accent-light);
+    }
+
+    .rsvp-shuttle__btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .rsvp-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .rsvp-backdrop--show {
+      display: flex;
+    }
+
+    .rsvp-modal {
+      background-color: var(--color-white);
+      border-radius: 1rem;
+      padding: 2rem 1.5rem;
+      width: 90%;
+      max-width: 360px;
+      position: relative;
+      animation: rsvpFadeIn 0.25s ease;
+    }
+
+    @keyframes rsvpFadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .rsvp-modal__title {
+      font-size: 1.1rem;
+      color: var(--color-text);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .rsvp-modal__close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--color-text-light);
+      cursor: pointer;
+      line-height: 1;
+      padding: 0.25rem;
+    }
+
+    .rsvp-form__group {
+      margin-bottom: 1.25rem;
+    }
+
+    .rsvp-form__label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      margin-bottom: 0.4rem;
+    }
+
+    .rsvp-form__input {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--color-border);
+      border-radius: 0.5rem;
+      font-family: var(--font-korean);
+      font-size: 0.95rem;
+      color: var(--color-text);
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .rsvp-form__input:focus {
+      border-color: var(--color-accent);
+    }
+
+    .rsvp-stepper {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .rsvp-stepper__btn {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      border: 1px solid var(--color-border);
+      background: var(--color-white);
+      font-size: 1.2rem;
+      color: var(--color-text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s;
+    }
+
+    .rsvp-stepper__btn:hover {
+      border-color: var(--color-accent);
+    }
+
+    .rsvp-stepper__btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .rsvp-stepper__value {
+      font-size: 1.1rem;
+      color: var(--color-text);
+      min-width: 2rem;
+      text-align: center;
+    }
+
+    .rsvp-form__submit {
+      width: 100%;
+      padding: 0.7rem;
+      background-color: var(--color-accent);
+      color: var(--color-white);
+      border: none;
+      border-radius: 0.5rem;
+      font-family: var(--font-korean);
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background-color 0.2s;
+    }
+
+    .rsvp-form__submit:hover {
+      background-color: var(--color-accent-light);
+    }
+
+    .rsvp-form__submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* ===== Gallery Section ===== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+    }
+    .gallery-grid__item {
+      aspect-ratio: 1;
+      background: var(--color-border);
+      border-radius: 2px;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+      cursor: pointer;
+    }
+
+    /* ===== Lightbox ===== */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      width: 100%;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .lightbox--active {
+      opacity: 1;
+      visibility: visible;
+      touch-action: none;
+    }
+    .lightbox__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.85);
+      pointer-events: none;
+    }
+    .lightbox__track {
+      position: relative;
+      display: flex;
+      align-items: center;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+      will-change: transform;
+    }
+    .lightbox__track--snapping {
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .lightbox__photo {
+      flex: 0 0 100vw;
+      width: 100vw;
+      height: 100%;
+      object-fit: contain;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+      pointer-events: none;
+    }
+    .lightbox__close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 10001;
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.25rem;
+      line-height: 40px;
+      text-align: center;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lightbox__error {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 3rem;
+      text-align: center;
+    }
+
+    /* ===== Accounts Section ===== */
+    .accordion {
+      background: #f0ece7;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .accordion__header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 20px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      font-family: var(--font-korean);
+      font-size: 0.95rem;
+      color: var(--color-text);
+    }
+    .accordion__arrow {
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s ease;
+    }
+    .accordion__arrow svg {
+      width: 12px;
+      height: 12px;
+    }
+    .accordion__header[aria-expanded="false"] .accordion__arrow {
+      transform: rotate(180deg);
+    }
+    .accordion__body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .accordion__body.open {
+      max-height: 800px;
+    }
+    .account-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border-top: 1px solid var(--color-border);
+      text-align: left;
+    }
+    .account-entry__info {
+      flex: 1;
+      min-width: 0;
+    }
+    .account-entry__holder {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--color-text);
+      margin-bottom: 4px;
+    }
+    .account-entry__account {
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+    }
+    .account-entry__copy {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: var(--color-text-light);
+      flex-shrink: 0;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+    .account-entry__copy:active {
+      background: var(--color-border);
+    }
+    .account-entry__copy svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* ===== Toast Notification ===== */
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--color-text);
+      color: var(--color-white);
+      padding: 12px 24px;
+      border-radius: 24px;
+      font-size: 0.85rem;
+      font-family: var(--font-korean);
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--color-text-light);
+    }
+
+    /* ===== Desktop Enhancement ===== */
+    @media (min-width: 768px) {
+      body {
+        background: #f0ece7;
+      }
+      .wrapper {
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
+        background: var(--color-bg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== BGM Audio ===== -->
+<audio id="bgm-audio" preload="auto">
+  <source src="photos/bgm.mp3" type="audio/mpeg">
+</audio>
+
+<div class="wrapper">
+
+  <!-- ===== Hero Section ===== -->
+  <!-- Hero photo: place your wedding photo at photos/hero.webp (recommended: 1080px wide, WebP format) -->
+  <section id="hero" class="hero" data-aos="fade-up">
+    <button id="bgm-toggle" class="bgm-toggle bgm-toggle--muted" onclick="toggleBgm()" aria-label="배경음악 재생/정지" style="display:none;">
+      <span class="bgm-toggle__bars"><span></span><span></span><span></span><span></span></span>
+      <span class="bgm-toggle__play"></span>
+    </button>
+    <p class="hero__date english">2026. 08. 08</p>
+    <h1 class="hero__names">
+      <span>__NAME_GROOM_KO__</span>
+      <span class="hero__ampersand">♡</span>
+      <span>__NAME_BRIDE_KO__</span>
+    </h1>
+  </section>
+
+  <!-- ===== Brief Section ===== -->
+  <section id="brief" class="section" data-aos="fade-up">
+    <hr class="brief__divider">
+    <p class="brief__datetime">2026년 8월 8일 토요일 오후 12시 30분</p>
+    <p class="brief__venue">엘블레스 LL층 다이아몬드홀</p>
+    <hr class="brief__divider brief__divider--bottom">
+  </section>
+
+  <!-- ===== Greeting Section ===== -->
+  <section id="greeting" class="section" data-aos="fade-up">
+    <h2 class="section__title">초대의 글</h2>
+    <p class="greeting__message">
+      더 나은 사람이 되길 바라던 중에<br>
+      같은 고민을 하는 사람을 만났습니다.<br><br>
+      재미없는 이 고민을 하는 사람이 또 있다니<br>
+      어찌나 반갑던지요.<br><br>
+      저희는 이제 더 나은 삶을 고민하고,<br>
+      또 그 삶을 향유하며<br>
+      손잡고 함께 걸어가려고 합니다.<br><br>
+      첫걸음을 내딛는 자리에 함께해<br>
+      축복해 주신다면<br>
+      저희에게 더없는 기쁨이 될 것입니다.
+    </p>
+    <!-- 
+      Family names: To mark a deceased parent, add class "greeting__parent--deceased"
+      Example: <span class="greeting__parent greeting__parent--deceased">parent name</span>
+      This will render as "故 parent name"
+    -->
+    <br>
+    <div class="greeting__families" data-aos="fade-up">
+      <p>
+        <span class="greeting__parent">__NAME_GROOM_FATHER_KO__</span> · <span class="greeting__parent">__NAME_GROOM_MOTHER_KO__</span>
+        <span class="role">의 아들</span> <strong class="greeting__child">__NAME_GROOM_FIRST_KO__</strong>
+      </p>
+      <p>
+        <span class="greeting__parent">__NAME_BRIDE_FATHER_KO__</span> · <span class="greeting__parent">__NAME_BRIDE_MOTHER_KO__</span>
+        <span class="role">의 딸</span> <strong class="greeting__child">__NAME_BRIDE_FIRST_KO__</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== Calendar Section ===== -->
+  <section id="calendar" class="section" data-aos="fade-up">
+    <h2 class="section__title">예식 일시</h2>
+    <div class="calendar">
+      <p class="calendar__month english"></p>
+      <div class="calendar__grid"></div>
+    </div>
+    <p class="calendar__info"></p>
+    <p class="calendar__dday" data-aos="fade-up"></p>
+  </section>
+
+  <!-- ===== Venue Section ===== -->
+  <section id="venue" class="section" data-aos="fade-up">
+    <h2 class="section__title">오시는 길</h2>
+    <p class="venue__name">엘블레스 LL층 다이아몬드홀</p>
+    <p class="venue__address">서울시 서초구 강남대로 213</p>
+    <div id="map" class="venue__map"></div>
+    <div class="nav-section" data-aos="fade-up">
+      <h3 class="nav-section__title">내비게이션</h3>
+      <div class="nav-buttons">
+        <a href="#" class="nav-buttons__btn" onclick="openNaverMap(); return false;">
+          <svg class="nav-buttons__icon" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="18" rx="4" fill="#03C75A"/><path d="M10.35 9.53L7.5 5.4H5.4v7.2h2.25V8.47L10.5 12.6h2.1V5.4h-2.25v4.13z" fill="#fff"/></svg>
+          네이버지도
+        </a>
+        <a href="#" class="nav-buttons__btn" onclick="openTmap(); return false;">
+          <svg class="nav-buttons__icon" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="18" rx="4" fill="#1458CF"/><path d="M5.4 6.6h2.1v6h2.1v-6h2.1V5.4H5.4v1.2z" fill="#fff"/></svg>
+          티맵
+        </a>
+        <a href="#" class="nav-buttons__btn" onclick="openKakaoMap(); return false;">
+          <svg class="nav-buttons__icon" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="18" rx="4" fill="#FEE500"/><path d="M9 4.5c-2.76 0-5 1.79-5 4 0 1.42.94 2.66 2.36 3.37l-.6 2.23c-.05.18.16.33.32.22L8.6 12.6c.13.01.26.02.4.02 2.76 0 5-1.79 5-4s-2.24-4-5-4z" fill="#3C1E1E"/></svg>
+          카카오맵
+        </a>
+      </div>
+    </div>
+
+    <div class="venue__divider"></div>
+
+    <!-- 지하철 -->
+    <div class="transport-section" data-aos="fade-up">
+      <h3 class="transport-section__title">지하철</h3>
+      <div class="transport-line">
+        <span class="transport-circle transport-circle--half"></span>
+        <span>3호선/신분당선 양재역 9번 출구 지하 연결</span>
+      </div>
+    </div>
+
+    <div class="venue__divider"></div>
+
+    <!-- 버스 -->
+    <div class="transport-section" data-aos="fade-up">
+      <h3 class="transport-section__title">버스 <span class="transport-section__desc">- 양재역, 서초문화예술회관에서 하차</span></h3>
+      <div class="transport-line">
+        <span class="transport-circle transport-circle--green"></span>
+        <span>지선 : 0411, 4432, 4435</span>
+      </div>
+      <div class="transport-line">
+        <span class="transport-circle transport-circle--blue"></span>
+        <span>간선 : 140, 341, 400, 405, 421, 440, 441, 452, 470, 542, 741</span>
+      </div>
+      <div class="transport-line">
+        <span class="transport-circle transport-circle--red"></span>
+        <span>광역 : 9404, 9408, 9409, 9500, 9501, 9711, 9802, M4403, M4434, M4448, M4449, M5422, M5438, M5443, M6410, M6450</span>
+      </div>
+      <div class="transport-line">
+        <span class="transport-circle transport-circle--red"></span>
+        <span>직행 : 1006, 1311, 3000, 3002, 3003, 3007, 3008, 3030, 3100, 3101, 3102, 3201, 3800, 5200, 5300, 9202, 9400, 9700, G1003, G3900, G8157, G9633</span>
+      </div>
+    </div>
+
+    <div class="venue__divider"></div>
+
+    <!-- 자가용 -->
+    <div class="transport-section" data-aos="fade-up">
+      <h3 class="transport-section__title">자가용 <span class="transport-section__desc">- 엘블레스 옆 양재역 주차장 이용</span></h3>
+      <p class="transport-detail">주차장 주소 : <a href="https://naver.me/FP8ejkhh" target="_blank" rel="noopener noreferrer">서울시 서초구 강남대로 221번지</a></p>
+      <p class="transport-detail">양재역 주차장에 주차하신 후 바로 옆 건물 스포타임으로 이동하시면 됩니다. (지하 1층에 엘블레스가 위치하고 있습니다.) 주차는 두시간 무료로 지원됩니다.</p>
+    </div>
+
+    <div class="venue__divider"></div>
+
+    <!-- 대절버스 -->
+    <div class="transport-section" data-aos="fade-up">
+      <h3 class="transport-section__title">대절버스</h3>
+      <p class="transport-detail">익산 승하차 위치: <a href="https://naver.me/G5kQLO4Z" target="_blank" rel="noopener noreferrer">익산 배산 체육 공원 주차장 정문(출발08:30)</a></p>
+      <p class="transport-detail">서울 승하차 위치: <a href="https://naver.me/5PV0LCnS" target="_blank" rel="noopener noreferrer">서초문화예술회관 앞(엘블레스 전방 50m 옆 위치)</a></p>
+      <p class="transport-detail">버스정보: 하늘 고속 관광(전북 71바 1910)</p>
+      <p class="transport-detail">대절버스 이용을 원하시는 분은 아래 버튼을 통해서 알려주세요.</p>
+      <div class="rsvp-shuttle">        
+        <button id="rsvpBtn" class="rsvp-shuttle__btn" onclick="openRsvpModal()">대절버스 탑승 신청</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery photos: place WebP photos as photos/gallery-1.webp, gallery-2.webp, etc.
+       build.sh scans photos/gallery-*.webp and injects img tags at build time.
+       Recommended: max 1080px wide, compressed WebP, square crop preferred -->
+  <!-- ===== Gallery Section ===== -->
+  <section id="gallery" class="section" data-aos="fade-up">
+    <h2 class="section__title">갤러리</h2>
+    <div class="gallery-grid">
+      <!-- __GALLERY_IMAGES__ -->
+    </div>
+  </section>
+
+  <!-- ===== Lightbox Overlay ===== -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox__overlay"></div>
+    <button class="lightbox__close" onclick="closeLightbox()" aria-label="닫기">&times;</button>
+    <div class="lightbox__track" id="lightbox-track"></div>
+  </div>
+
+  <!-- ===== Accounts Section ===== -->
+  <section id="accounts" class="section" data-aos="fade-up">
+    <h2 class="section__title">마음 전하실 곳</h2>
+    <p class="greeting__message">
+      참석이 어려우신 분들을 위해<br>
+      계좌번호를 기재하였습니다.<br>
+      너그러운 마음으로 양해 부탁드립니다.
+    </p>
+
+    <!-- Groom Side -->
+    <div class="accordion" data-aos="fade-up">
+      <button class="accordion__header" type="button" aria-expanded="false">
+        <span>신랑측</span>
+        <span class="accordion__arrow"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M5.76 3.46a.38.38 0 0 1 .5.02l4.5 4.5.03.03a.38.38 0 0 1-.56.53L6 4.28 1.77 8.52a.38.38 0 0 1-.54-.53l4.5-4.5.03-.03Z" fill="currentColor"/></svg></span>
+      </button>
+      <div class="accordion__body">
+        <div class="account-entry">
+          <div class="account-entry__info">
+            <p class="account-entry__holder">
+              __NAME_GROOM_KO__
+            </p>
+            <p class="account-entry__account">__ACCOUNT_GROOM_BANK__ __ACCOUNT_GROOM_NUMBER__</p>
+          </div>
+          <button class="account-entry__copy" type="button" onclick="copyToClipboard('__ACCOUNT_GROOM_NUMBER__', this)" aria-label="계좌번호 복사">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+        <div class="account-entry">
+          <div class="account-entry__info">
+            <p class="account-entry__holder">
+              __NAME_GROOM_FATHER_KO__
+            </p>
+            <p class="account-entry__account">__ACCOUNT_GROOM_FATHER_BANK__ __ACCOUNT_GROOM_FATHER_NUMBER__</p>
+          </div>
+          <button class="account-entry__copy" type="button" onclick="copyToClipboard('__ACCOUNT_GROOM_FATHER_NUMBER__', this)" aria-label="계좌번호 복사">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+        <div class="account-entry">
+          <div class="account-entry__info">
+            <p class="account-entry__holder">
+              __NAME_GROOM_MOTHER_KO__
+            </p>
+            <p class="account-entry__account">__ACCOUNT_GROOM_MOTHER_BANK__ __ACCOUNT_GROOM_MOTHER_NUMBER__</p>
+          </div>
+          <button class="account-entry__copy" type="button" onclick="copyToClipboard('__ACCOUNT_GROOM_MOTHER_NUMBER__', this)" aria-label="계좌번호 복사">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bride Side -->
+    <div class="accordion" data-aos="fade-up">
+      <button class="accordion__header" type="button" aria-expanded="false">
+        <span>신부측</span>
+        <span class="accordion__arrow"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M5.76 3.46a.38.38 0 0 1 .5.02l4.5 4.5.03.03a.38.38 0 0 1-.56.53L6 4.28 1.77 8.52a.38.38 0 0 1-.54-.53l4.5-4.5.03-.03Z" fill="currentColor"/></svg></span>
+      </button>
+      <div class="accordion__body">
+        <div class="account-entry">
+          <div class="account-entry__info">
+            <p class="account-entry__holder">
+              __NAME_BRIDE_KO__
+            </p>
+            <p class="account-entry__account">__ACCOUNT_BRIDE_BANK__ __ACCOUNT_BRIDE_NUMBER__</p>
+          </div>
+          <button class="account-entry__copy" type="button" onclick="copyToClipboard('__ACCOUNT_BRIDE_NUMBER__', this)" aria-label="계좌번호 복사">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+        <div class="account-entry">
+          <div class="account-entry__info">
+            <p class="account-entry__holder">
+              __NAME_BRIDE_FATHER_KO__
+            </p>
+            <p class="account-entry__account">__ACCOUNT_BRIDE_FATHER_BANK__ __ACCOUNT_BRIDE_FATHER_NUMBER__</p>
+          </div>
+          <button class="account-entry__copy" type="button" onclick="copyToClipboard('__ACCOUNT_BRIDE_FATHER_NUMBER__', this)" aria-label="계좌번호 복사">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+        <div class="account-entry">
+          <div class="account-entry__info">
+            <p class="account-entry__holder">
+              __NAME_BRIDE_MOTHER_KO__
+            </p>
+            <p class="account-entry__account">__ACCOUNT_BRIDE_MOTHER_BANK__ __ACCOUNT_BRIDE_MOTHER_NUMBER__</p>
+          </div>
+          <button class="account-entry__copy" type="button" onclick="copyToClipboard('__ACCOUNT_BRIDE_MOTHER_NUMBER__', this)" aria-label="계좌번호 복사">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <p>예식 장소가 협소하여 화환은 정중히 사양하오니<br>넓은 양해 부탁드립니다.</p>
+    <br>
+    <p>감사합니다</p>
+  </footer>
+
+  <!-- RSVP Modal -->
+  <div id="rsvpBackdrop" class="rsvp-backdrop" onclick="closeRsvpModal(event)">
+    <div class="rsvp-modal" onclick="event.stopPropagation()">
+      <button class="rsvp-modal__close" onclick="closeRsvpModal()">&times;</button>
+      <h3 class="rsvp-modal__title">대절버스 탑승 신청</h3>
+      <form id="rsvpForm" onsubmit="return submitRsvp(event)">
+        <div class="rsvp-form__group">
+          <label class="rsvp-form__label" for="rsvpName">이름</label>
+          <input class="rsvp-form__input" type="text" id="rsvpName" name="name" required placeholder="이름을 입력해 주세요">
+        </div>
+        <div class="rsvp-form__group">
+          <label class="rsvp-form__label">탑승 인원 (본인 포함)</label>
+          <div class="rsvp-stepper">
+            <button type="button" class="rsvp-stepper__btn" onclick="adjustCount(-1)">−</button>
+            <span id="rsvpCount" class="rsvp-stepper__value">1</span>
+            <button type="button" class="rsvp-stepper__btn" onclick="adjustCount(1)">+</button>
+          </div>
+        </div>
+        <button type="submit" id="rsvpSubmit" class="rsvp-form__submit">신청하기</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast notification for copy feedback -->
+  <div id="toast" class="toast"></div>
+
+</div>
+
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  /* ===== Opening Animation Controller ===== */
+  /* (Removed) */
+
+  /* ===== AOS Initialization ===== */
+  AOS.init({
+    duration: 800,
+    easing: 'ease-out',
+    once: true,
+    offset: 50,
+  });
+
+
+  /* ===== Lightbox ===== */
+  (function() {
+    var lightbox = document.getElementById('lightbox');
+    var track = document.getElementById('lightbox-track');
+    var overlay = lightbox ? lightbox.querySelector('.lightbox__overlay') : null;
+    if (!lightbox || !track) return;
+
+    var photos = [];
+    var currentIndex = 0;
+    var scrollY = 0;
+    var isOpen = false;
+    var trackWidth = 0;
+
+    window.openLightbox = function(index) {
+      photos = [];
+      var items = document.querySelectorAll('.gallery-grid__item');
+      for (var i = 0; i < items.length; i++) {
+        photos.push(items[i].src);
+      }
+      currentIndex = index;
+
+      scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      document.body.style.position = 'fixed';
+      document.body.style.top = '-' + scrollY + 'px';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.overflow = 'hidden';
+
+      buildStrip();
+      trackWidth = window.innerWidth;
+      setStripPosition(false);
+      lightbox.classList.add('lightbox--active');
+      isOpen = true;
+    };
+
+    function buildStrip() {
+      track.innerHTML = '';
+      track.classList.remove('lightbox__track--snapping');
+
+      // Clone of last photo at start
+      appendPhoto(photos[photos.length - 1]);
+      // All real photos
+      for (var i = 0; i < photos.length; i++) {
+        appendPhoto(photos[i]);
+      }
+      // Clone of first photo at end
+      appendPhoto(photos[0]);
+    }
+
+    function appendPhoto(src) {
+      var img = document.createElement('img');
+      img.className = 'lightbox__photo';
+      img.src = src;
+      img.alt = '';
+      img.draggable = false;
+      img.onerror = function() {
+        this.style.display = 'none';
+        var err = document.createElement('div');
+        err.className = 'lightbox__error';
+        this.parentNode.insertBefore(err, this);
+      };
+      track.appendChild(img);
+    }
+
+    function displayIndex() {
+      // Offset by 1 for the prepended clone
+      return currentIndex + 1;
+    }
+
+    function setStripPosition(animate) {
+      if (!trackWidth) trackWidth = window.innerWidth;
+      if (animate) {
+        track.classList.add('lightbox__track--snapping');
+      } else {
+        track.classList.remove('lightbox__track--snapping');
+      }
+      track.style.transform = 'translateX(-' + (displayIndex() * 100) + 'vw)';
+    }
+
+    function handleTransitionEnd() {
+      track.classList.remove('lightbox__track--snapping');
+      // If we landed on a clone, jump to the real element
+      var di = displayIndex();
+      if (di === 0) {
+        // At prepended clone (last photo clone) — jump to real last
+        currentIndex = photos.length - 1;
+        track.style.transform = 'translateX(-' + (displayIndex() * 100) + 'vw)';
+      } else if (di === photos.length + 1) {
+        // At appended clone (first photo clone) — jump to real first
+        currentIndex = 0;
+        track.style.transform = 'translateX(-' + (displayIndex() * 100) + 'vw)';
+      }
+    }
+
+    track.addEventListener('transitionend', handleTransitionEnd);
+
+    function closeLightbox() {
+      if (!isOpen) return;
+      lightbox.classList.remove('lightbox--active');
+      isOpen = false;
+      trackWidth = 0;
+
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.overflow = '';
+      window.scrollTo(0, scrollY);
+    }
+
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox || e.target === overlay) {
+        closeLightbox();
+      }
+    });
+
+    var startY = 0;
+    var startX = 0;
+    var startTime = 0;
+    var dragY = 0;
+    var currentDragX = 0;
+    var directionLocked = false;
+    var isVertical = false;
+
+    function handleSwipeStart(x, y) {
+      if (!isOpen) return;
+      startY = y;
+      startX = x;
+      startTime = Date.now();
+      dragY = 0;
+      currentDragX = 0;
+      directionLocked = false;
+      isVertical = false;
+      if (!trackWidth) trackWidth = window.innerWidth;
+      track.classList.remove('lightbox__track--snapping');
+    }
+
+    function handleSwipeMove(x, y) {
+      if (!isOpen) return;
+      var dx = x - startX;
+      var dy = y - startY;
+
+      if (!directionLocked) {
+        if (Math.abs(dx) > 12 || Math.abs(dy) > 12) {
+          directionLocked = true;
+          isVertical = Math.abs(dy) > Math.abs(dx);
+        }
+        return;
+      }
+
+      if (directionLocked && !isVertical) {
+        currentDragX = dx;
+        var dxPercent = dx / trackWidth * 100;
+        track.style.transform = 'translateX(' + (-(displayIndex() * 100) + dxPercent) + 'vw)';
+        return;
+      }
+
+      if (!isVertical) return;
+
+      dragY = dy > 0 ? dy : 0;
+      var photoEl = track.children[displayIndex()];
+      if (photoEl) {
+        photoEl.style.transform = 'translateY(' + dragY + 'px)';
+      }
+      var opacity = Math.max(0, 0.85 - (dragY / 400));
+      overlay.style.background = 'rgba(255, 255, 255, ' + opacity + ')';
+    }
+
+    function handleSwipeEnd() {
+      if (!isOpen || !directionLocked) return;
+
+      if (!isVertical) {
+        var elapsed = Date.now() - startTime;
+        var velocity = Math.abs(currentDragX) / elapsed;
+
+        if (Math.abs(currentDragX) > 50 || velocity > 0.3) {
+          if (currentDragX > 0) {
+            currentIndex--;
+          } else {
+            currentIndex++;
+          }
+        }
+        setStripPosition(true);
+        currentDragX = 0;
+        return;
+      }
+
+      var photoEl = track.children[displayIndex()];
+
+      if (dragY > 120) {
+        if (photoEl) {
+          photoEl.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+          photoEl.style.transform = 'translateY(' + (dragY + 100) + 'px)';
+          photoEl.style.opacity = '0';
+        }
+        overlay.style.transition = 'background 0.2s ease';
+        overlay.style.background = 'rgba(255, 255, 255, 0)';
+        setTimeout(function() {
+          closeLightbox();
+          if (photoEl) {
+            photoEl.style.transition = '';
+            photoEl.style.transform = '';
+            photoEl.style.opacity = '';
+          }
+          overlay.style.transition = '';
+          overlay.style.background = '';
+        }, 200);
+      } else {
+        if (photoEl) {
+          photoEl.style.transition = 'transform 0.3s ease';
+          photoEl.style.transform = '';
+        }
+        overlay.style.transition = 'background 0.3s ease';
+        overlay.style.background = '';
+      }
+      dragY = 0;
+    }
+
+    /* Touch events for mobile (iOS Safari, Chrome, KakaoTalk) */
+    lightbox.addEventListener('touchstart', function(e) {
+      if (!isOpen) return;
+      e.preventDefault();
+      handleSwipeStart(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: false });
+
+    lightbox.addEventListener('touchmove', function(e) {
+      if (!isOpen) return;
+      e.preventDefault();
+      handleSwipeMove(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: false });
+
+    lightbox.addEventListener('touchend', function() {
+      handleSwipeEnd();
+    });
+
+    /* Mouse events for desktop (macOS Safari trackpad/mouse drag) */
+    var mouseDown = false;
+
+    track.addEventListener('mousedown', function(e) {
+      if (!isOpen) return;
+      e.preventDefault();
+      mouseDown = true;
+      handleSwipeStart(e.clientX, e.clientY);
+    });
+
+    track.addEventListener('mousemove', function(e) {
+      if (!mouseDown) return;
+      handleSwipeMove(e.clientX, e.clientY);
+    });
+
+    track.addEventListener('mouseup', function() {
+      if (!mouseDown) return;
+      mouseDown = false;
+      handleSwipeEnd();
+    });
+
+    track.addEventListener('mouseleave', function() {
+      if (!mouseDown) return;
+      mouseDown = false;
+      handleSwipeEnd();
+    });
+
+    window.closeLightbox = closeLightbox;
+  })();
+
+  /* ===== Accordion Toggle ===== */
+  document.querySelectorAll('.accordion__header').forEach(function(header) {
+    header.addEventListener('click', function() {
+      var body = this.nextElementSibling;
+      var isOpen = body.classList.toggle('open');
+      this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  });
+
+  /* ===== Calendar Generation & D-Day Countdown ===== */
+  (function() {
+    var WEDDING = {
+      year: 2026,
+      month: 8,
+      day: 8,
+      hour: 12,
+      minute: 30,
+      dayOfWeekKo: '토요일',
+      timeString: '오후 12시 30분'
+    };
+
+    function generateCalendar() {
+      var firstDayOfWeek = new Date(WEDDING.year, WEDDING.month - 1, 1).getDay();
+      var daysInMonth = new Date(WEDDING.year, WEDDING.month, 0).getDate();
+      var grid = document.querySelector('.calendar__grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      var dayHeaders = ['일', '월', '화', '수', '목', '금', '토'];
+      for (var h = 0; h < dayHeaders.length; h++) {
+        var headerSpan = document.createElement('span');
+        headerSpan.className = 'day-header';
+        headerSpan.textContent = dayHeaders[h];
+        grid.appendChild(headerSpan);
+      }
+
+      for (var e = 0; e < firstDayOfWeek; e++) {
+        var emptySpan = document.createElement('span');
+        emptySpan.className = 'day empty';
+        grid.appendChild(emptySpan);
+      }
+
+      for (var i = 1; i <= daysInMonth; i++) {
+        var daySpan = document.createElement('span');
+        daySpan.className = 'day';
+        daySpan.textContent = i;
+        var dayOfWeek = (firstDayOfWeek + i - 1) % 7;
+        if (dayOfWeek === 0) {
+          daySpan.className += ' sunday';
+        }
+        if (dayOfWeek === 6) {
+          daySpan.className += ' saturday';
+        }
+        if (i === WEDDING.day) {
+          daySpan.className += ' highlight';
+        }
+        grid.appendChild(daySpan);
+      }
+
+      var monthEl = document.querySelector('.calendar__month');
+      if (monthEl) {
+        var monthStr = WEDDING.month < 10 ? '0' + WEDDING.month : '' + WEDDING.month;
+        monthEl.textContent = WEDDING.year + '. ' + monthStr;
+      }
+
+      var infoEl = document.querySelector('.calendar__info');
+      if (infoEl) {
+        infoEl.textContent = WEDDING.year + '년 ' + WEDDING.month + '월 ' + WEDDING.day + '일 ' + WEDDING.dayOfWeekKo + ' ' + WEDDING.timeString;
+      }
+    }
+
+    function updateDday() {
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+      var weddingDate = new Date(WEDDING.year, WEDDING.month - 1, WEDDING.day);
+      weddingDate.setHours(0, 0, 0, 0);
+      var diff = Math.ceil((weddingDate - today) / (1000 * 60 * 60 * 24));
+      var ddayEl = document.querySelector('.calendar__dday');
+      if (!ddayEl) return;
+      if (diff > 0) {
+        ddayEl.textContent = 'D-' + diff;
+      } else if (diff === 0) {
+        ddayEl.textContent = 'D-Day';
+      } else {
+        ddayEl.textContent = 'D+' + Math.abs(diff);
+      }
+    }
+
+    generateCalendar();
+    updateDday();
+  })();
+
+  /* ===== Venue Map & Navigation ===== */
+  var VENUE = {
+    name: '엘블레스',
+    hall: 'LL층 다이아몬드홀',
+    address: '서울시 서초구 강남대로 213 엘블레스',
+    lat: 37.4829,
+    lng: 127.0352,
+    zoom: 16
+  };
+
+  (function() {
+    if (typeof naver === 'undefined' || !naver.maps) return;
+
+    var position = new naver.maps.LatLng(VENUE.lat, VENUE.lng);
+    var mapCenter = new naver.maps.LatLng(VENUE.lat - 0.001, VENUE.lng);
+    var map = new naver.maps.Map('map', {
+      center: mapCenter,
+      zoom: VENUE.zoom,
+      zoomControl: false,
+      mapTypeControl: false,
+      scaleControl: false
+    });
+
+    new naver.maps.Marker({
+      position: position,
+      map: map
+    });
+  })();
+
+  function openNaverMap() {
+    var url = 'nmap://place?lat=' + VENUE.lat + '&lng=' + VENUE.lng + '&name=' + encodeURIComponent(VENUE.name) + '&appname=wedding-invitation';
+    var webUrl = 'https://map.naver.com/v5/search/' + encodeURIComponent(VENUE.address);
+    openDeepLink(url, webUrl);
+  }
+
+  function openKakaoMap() {
+    var searchQuery = encodeURIComponent(VENUE.address);
+    var webUrl = 'https://map.kakao.com/link/search/' + searchQuery;
+    var userAgent = navigator.userAgent || '';
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(userAgent);
+    if (isMobile) {
+      window.location.href = 'kakaomap://search?q=' + searchQuery + '&p=' + VENUE.lat + ',' + VENUE.lng;
+      setTimeout(function() {
+        window.location.href = webUrl;
+      }, 1500);
+    } else {
+      window.open(webUrl, '_blank');
+    }
+  }
+
+  function openTmap() {
+    var url = 'tmap://route?goalx=' + VENUE.lng + '&goaly=' + VENUE.lat + '&goalname=' + encodeURIComponent(VENUE.name);
+    var userAgent = navigator.userAgent || '';
+    var isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+    var isAndroid = /Android/i.test(userAgent);
+    var storeUrl = isIOS
+      ? 'https://apps.apple.com/kr/app/t-map/id431589174'
+      : 'https://play.google.com/store/apps/details?id=com.skt.tmap.ku';
+    openDeepLink(url, storeUrl);
+  }
+
+  function openDeepLink(deepLink, webFallback) {
+    var userAgent = navigator.userAgent || '';
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(userAgent);
+    if (isMobile) {
+      var start = Date.now();
+      window.location.href = deepLink;
+      setTimeout(function() {
+        if (Date.now() - start < 2000) {
+          window.location.href = webFallback;
+        }
+      }, 1500);
+    } else {
+      window.open(webFallback, '_blank');
+    }
+  }
+
+  /* ===== Toast Notification ===== */
+  function showToast(message) {
+    var toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+    }, 2000);
+  }
+
+  /* ===== Copy to Clipboard ===== */
+  function copyToClipboard(text, button) {
+    text = text.replace(/-/g, '');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        showCopySuccess(button);
+      }).catch(function() {
+        fallbackCopy(text, button);
+      });
+    } else {
+      fallbackCopy(text, button);
+    }
+  }
+
+  function fallbackCopy(text, button) {
+    var textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      showCopySuccess(button);
+    } catch (e) {
+      showToast('복사에 실패했습니다');
+    }
+    document.body.removeChild(textarea);
+  }
+
+  function showCopySuccess(button) {
+    var originalHTML = button.innerHTML;
+    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    button.style.visibility = 'hidden';
+    showToast('계좌번호가 복사되었습니다');
+    setTimeout(function() {
+      button.innerHTML = originalHTML;
+      button.style.visibility = '';
+    }, 1000);
+  }
+
+  /* ===== Background Music ===== */
+  (function() {
+    var audio = document.getElementById('bgm-audio');
+    var toggleBtn = document.getElementById('bgm-toggle');
+    if (!audio || !toggleBtn) return;
+
+    var isPlaying = false;
+    var hasStarted = false;
+    var wasPlayingBeforeHidden = false;
+
+    function updateToggleUI() {
+      if (isPlaying) {
+        toggleBtn.className = 'bgm-toggle bgm-toggle--playing';
+      } else {
+        toggleBtn.className = 'bgm-toggle bgm-toggle--muted';
+      }
+    }
+
+    function startMusic() {
+      if (hasStarted) return;
+      hasStarted = true;
+      var playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(function() {
+          isPlaying = true;
+          toggleBtn.style.display = 'flex';
+          updateToggleUI();
+        }).catch(function() {
+          isPlaying = false;
+          hasStarted = false;
+          toggleBtn.style.display = 'flex';
+          updateToggleUI();
+        });
+      }
+    }
+
+    // Show toggle button once audio metadata is loaded
+    audio.addEventListener('loadedmetadata', function() {
+      toggleBtn.style.display = 'flex';
+    });
+
+    // If metadata already loaded (cached)
+    if (audio.readyState >= 1) {
+      toggleBtn.style.display = 'flex';
+    }
+
+    // Single playthrough — stop when ended (no loop)
+    audio.loop = false;
+    audio.addEventListener('ended', function() {
+      isPlaying = false;
+      updateToggleUI();
+    });
+
+    // Auto-play on first user interaction
+    var interactionEvents = ['click', 'touchstart', 'scroll'];
+    function onFirstInteraction() {
+      for (var i = 0; i < interactionEvents.length; i++) {
+        document.removeEventListener(interactionEvents[i], onFirstInteraction, { capture: true });
+      }
+      startMusic();
+    }
+    for (var i = 0; i < interactionEvents.length; i++) {
+      document.addEventListener(interactionEvents[i], onFirstInteraction, { capture: true, passive: true });
+    }
+
+    // Toggle function (global for onclick)
+    window.toggleBgm = function() {
+      if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+      } else {
+        var playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(function() {
+            isPlaying = true;
+            hasStarted = true;
+            updateToggleUI();
+          }).catch(function() {
+            // play blocked
+          });
+        }
+      }
+      updateToggleUI();
+    };
+
+    // Tab visibility handling — pause when hidden, resume when visible
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        wasPlayingBeforeHidden = isPlaying;
+        if (isPlaying) {
+          audio.pause();
+          isPlaying = false;
+        }
+      } else {
+        if (wasPlayingBeforeHidden && !audio.ended) {
+          var playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise.then(function() {
+              isPlaying = true;
+              updateToggleUI();
+            }).catch(function() {
+              isPlaying = false;
+              updateToggleUI();
+            });
+          }
+        }
+      }
+    });
+  })();
+
+  /* ===== RSVP Shuttle Bus ===== */
+  (function() {
+    var SUPABASE_CONFIG = {
+      url: '__SUPABASE_URL__',
+      key: '__SUPABASE_ANON_KEY__'
+    };
+
+    var supabaseClient = null;
+    var rsvpGuestCount = 1;
+    var RSVP_MIN = 1;
+    var RSVP_MAX = 10;
+    var STORAGE_KEY = 'shuttle_rsvp_data';
+
+    function initSupabase() {
+      if (typeof supabase === 'undefined' || !supabase.createClient) return null;
+      try {
+        return supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    supabaseClient = initSupabase();
+
+    function checkPriorSubmission() {
+      var stored = sessionStorage.getItem(STORAGE_KEY);
+      if (!stored) return;
+      try {
+        var data = JSON.parse(stored);
+        var btn = document.getElementById('rsvpBtn');
+        if (btn && data.name) {
+          btn.textContent = '예약 수정';
+        }
+      } catch (e) {
+        // ignore parse errors
+      }
+    }
+
+    checkPriorSubmission();
+
+    window.openRsvpModal = function() {
+      if (!supabaseClient) {
+        showToast('잠시 후 다시 시도해주세요');
+        return;
+      }
+      var backdrop = document.getElementById('rsvpBackdrop');
+      if (!backdrop) return;
+
+      var stored = sessionStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        try {
+          var data = JSON.parse(stored);
+          var nameInput = document.getElementById('rsvpName');
+          if (nameInput && data.name) nameInput.value = data.name;
+          if (data.count >= RSVP_MIN && data.count <= RSVP_MAX) {
+            rsvpGuestCount = data.count;
+            updateCountDisplay();
+          }
+        } catch (e) {
+          // ignore
+        }
+      }
+
+      backdrop.classList.add('rsvp-backdrop--show');
+    };
+
+    window.closeRsvpModal = function(event) {
+      if (event && event.target && !event.target.classList.contains('rsvp-backdrop') && !event.target.classList.contains('rsvp-modal__close')) {
+        return;
+      }
+      var backdrop = document.getElementById('rsvpBackdrop');
+      if (backdrop) backdrop.classList.remove('rsvp-backdrop--show');
+    };
+
+    function updateCountDisplay() {
+      var countEl = document.getElementById('rsvpCount');
+      if (countEl) countEl.textContent = rsvpGuestCount;
+    }
+
+    window.adjustCount = function(delta) {
+      var newCount = rsvpGuestCount + delta;
+      if (newCount < RSVP_MIN || newCount > RSVP_MAX) return;
+      rsvpGuestCount = newCount;
+      updateCountDisplay();
+    };
+
+    window.submitRsvp = function(event) {
+      event.preventDefault();
+
+      var nameInput = document.getElementById('rsvpName');
+      var submitBtn = document.getElementById('rsvpSubmit');
+      if (!nameInput || !submitBtn) return false;
+
+      var name = nameInput.value.trim();
+      if (!name) {
+        nameInput.focus();
+        return false;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = '신청 중...';
+
+      var insertData = { name: name, guest_count: rsvpGuestCount };
+
+      doInsert(insertData, 0, function(success) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '신청하기';
+
+        if (success) {
+          sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ name: name, count: rsvpGuestCount }));
+
+          var backdrop = document.getElementById('rsvpBackdrop');
+          if (backdrop) backdrop.classList.remove('rsvp-backdrop--show');
+
+          showToast('탑승 신청이 완료되었습니다');
+
+          var btn = document.getElementById('rsvpBtn');
+          if (btn) btn.textContent = '예약 수정';
+        } else {
+          showToast('신청에 실패했습니다. 다시 시도해주세요.');
+        }
+      });
+
+      return false;
+    };
+
+    function doInsert(data, retryCount, callback) {
+      if (!supabaseClient) {
+        callback(false);
+        return;
+      }
+      supabaseClient
+        .from('shuttle_rsvp')
+        .insert([data])
+        .then(function(response) {
+          if (response.error) {
+            if (retryCount < 1) {
+              doInsert(data, retryCount + 1, callback);
+            } else {
+              callback(false);
+            }
+          } else {
+            callback(true);
+          }
+        })
+        .catch(function() {
+          if (retryCount < 1) {
+            doInsert(data, retryCount + 1, callback);
+          } else {
+            callback(false);
+          }
+        });
+    }
+  })();
+</script>
+</body>
+</html>
